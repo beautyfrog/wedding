@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jbt.dao.CarInfoDao">
+
+	<resultMap id="BaseResultMap" type="com.jbt.bean.CarInfo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="sn" property="sn" jdbcType="VARCHAR" />
+		<result column="plateNumber" property="plateNumber" jdbcType="VARCHAR" />
+		<result column="driverType" property="driverType" jdbcType="VARCHAR" />
+		<result column="totalMileage" property="totalMileage" jdbcType="REAL" />
+		<result column="driverName" property="driverName" jdbcType="VARCHAR" />
+		<result column="vin" property="vin" jdbcType="VARCHAR" />
+		<result column="engineNum" property="engineNum" jdbcType="VARCHAR" />
+		<result column="purpose" property="purpose" jdbcType="VARCHAR" />
+		<result column="carModel" property="carModel" jdbcType="VARCHAR" />
+		<result column="seatNum" property="seatNum" jdbcType="INTEGER" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="managerName" property="managerName" jdbcType="VARCHAR" />
+		<result column="managerId" property="managerId" jdbcType="INTEGER" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="createDate" property="createDate" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, sn, sectorInfo, plateNumber, driverType, totalMileage,
+		driverName,
+		vin, engineNum, purpose, carModel, seatNum, state, managerId,
+		createDate, description
+	</sql>
+	
+	<sql id="selective">
+		<trim suffixOverrides="AND">
+			<if test="id != null">
+				id = #{id,jdbcType=INTEGER} AND 			
+			</if>
+			<if test="sectorInfo != null">
+				sectorInfo = #{sectorInfo,jdbcType=INTEGER} AND 			
+			</if>
+			<if test="sn != null and sn != ''">
+				sn = #{sn,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="plateNumber != null and plateNumber != ''">
+				plateNumber = #{plateNumber,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="driverType != null and driverType != ''">
+				driverType = #{driverType,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="vin != null and vin != ''">
+				vin = #{vin,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="engineNum != null and engineNum != ''">
+				engineNum = #{engineNum,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="purpose != null and purpose != ''">
+				purpose = #{purpose,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="carModel != null and carModel != ''">
+				carModel = #{carModel,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="seatNum != null">
+				seatNum = #{seatNum,jdbcType=INTEGER} AND 			
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=INTEGER} AND 			
+			</if>
+			<if test="managerId != null">
+				managerId = #{managerId,jdbcType=INTEGER} AND 			
+			</if>
+			<if test="createDate != null and createDate != ''">
+				createDate = #{createDate,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="description != null and description != ''">
+				description = #{description,jdbcType=VARCHAR} AND 			
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="entitySelective">
+		<if test="carInfo != null">
+			<if test="carInfo.id != null">
+				id = #{carInfo.id,jdbcType=INTEGER} AND 			
+			</if>
+			<if test="carInfo.sectorInfo != null">
+				sectorInfo = #{carInfo.sectorInfo,jdbcType=INTEGER} AND 			
+			</if>
+			<if test="carInfo.sn != null and carInfo.sn != ''">
+				sn = #{carInfo.sn,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="carInfo.plateNumber != null and carInfo.plateNumber != ''">
+				plateNumber = #{carInfo.plateNumber,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="carInfo.driverType != null and carInfo.driverType != ''">
+				driverType = #{carInfo.driverType,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="carInfo.vin != null and carInfo.vin != ''">
+				vin = #{carInfo.vin,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="carInfo.engineNum != null and carInfo.engineNum != ''">
+				engineNum = #{carInfo.engineNum,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="carInfo.purpose != null and carInfo.purpose != ''">
+				purpose = #{carInfo.purpose,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="carInfo.carModel != null and carInfo.carModel != ''">
+				carModel = #{carInfo.carModel,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="carInfo.seatNum != null">
+				seatNum = #{carInfo.seatNum,jdbcType=INTEGER} AND 			
+			</if>
+			<if test="carInfo.state != null">
+				state = #{carInfo.state,jdbcType=INTEGER} AND 			
+			</if>
+			<if test="carInfo.managerId != null">
+				managerId = #{carInfo.managerId,jdbcType=INTEGER} AND 			
+			</if>
+			<if test="carInfo.createDate != null and carInfo.createDate != ''">
+				createDate = #{carInfo.createDate,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="carInfo.description != null and carInfo.description != ''">
+				description = #{carInfo.description,jdbcType=VARCHAR} AND 			
+			</if>			
+		</if>		
+	</sql>
+	
+	<sql id="unboundSelective">
+		sn IS NULL AND 
+		<if test="carInfo != null">
+			<if test="carInfo.id != null">
+				id = #{carInfo.id,jdbcType=INTEGER} AND 			
+			</if>
+			<if test="carInfo.sectorInfo != null">
+				sectorInfo = #{carInfo.sectorInfo,jdbcType=INTEGER} AND 			
+			</if>
+			<if test="carInfo.plateNumber != null and carInfo.plateNumber != ''">
+				plateNumber = #{carInfo.plateNumber,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="carInfo.driverType != null and carInfo.driverType != ''">
+				driverType = #{carInfo.driverType,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="carInfo.vin != null and carInfo.vin != ''">
+				vin = #{carInfo.vin,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="carInfo.engineNum != null and carInfo.engineNum != ''">
+				engineNum = #{carInfo.engineNum,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="carInfo.purpose != null and carInfo.purpose != ''">
+				purpose = #{carInfo.purpose,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="carInfo.carModel != null and carInfo.carModel != ''">
+				carModel = #{carInfo.carModel,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="carInfo.seatNum != null">
+				seatNum = #{carInfo.seatNum,jdbcType=INTEGER} AND 			
+			</if>
+			<if test="carInfo.state != null">
+				state = #{carInfo.state,jdbcType=INTEGER} AND 			
+			</if>
+			<if test="carInfo.managerId != null">
+				managerId = #{carInfo.managerId,jdbcType=INTEGER} AND 			
+			</if>
+			<if test="carInfo.createDate != null and carInfo.createDate != ''">
+				createDate = #{carInfo.createDate,jdbcType=VARCHAR} AND 			
+			</if>
+			<if test="carInfo.description != null and carInfo.description != ''">
+				description = #{carInfo.description,jdbcType=VARCHAR} AND 			
+			</if>			
+		</if>		
+	</sql>
+	
+	<select id="getCount" parameterType="com.jbt.bean.CarInfo"
+		resultType="java.lang.Integer">
+		SELECT COUNT(id) FROM car_info
+		<trim prefix="WHERE">
+			<include refid="selective" />
+		</trim>
+	</select>
+	
+	<select id="getExistCount" parameterType="com.jbt.bean.CarInfo"
+		resultType="java.lang.Integer">
+		SELECT COUNT(id) FROM car_info
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="id != null">
+				id != #{id,jdbcType=INTEGER} AND 			
+			</if>
+			<trim prefix="(" suffix=")" suffixOverrides="OR">
+				<if test="sn != null and sn != ''">
+					sn = #{sn,jdbcType=VARCHAR} OR 			
+				</if>
+				<if test="plateNumber != null and plateNumber != ''">
+					plateNumber = #{plateNumber,jdbcType=VARCHAR} OR 			
+				</if>
+				<if test="driverType != null and driverType != ''">
+					driverType = #{driverType,jdbcType=VARCHAR} OR 			
+				</if>
+				<if test="vin != null and vin != ''">
+					vin = #{vin,jdbcType=VARCHAR} OR 			
+				</if>
+				<if test="engineNum != null and engineNum != ''">
+					engineNum = #{engineNum,jdbcType=VARCHAR} OR 			
+				</if>
+				<if test="purpose != null and purpose != ''">
+					purpose = #{purpose,jdbcType=VARCHAR} OR 			
+				</if>
+				<if test="carModel != null and carModel != ''">
+					carModel = #{carModel,jdbcType=VARCHAR} OR 			
+				</if>
+				<if test="seatNum != null">
+					seatNum = #{seatNum,jdbcType=INTEGER} OR 			
+				</if>
+				<if test="state != null">
+					state = #{state,jdbcType=INTEGER} OR 			
+				</if>
+				<if test="managerId != null">
+					managerId = #{managerId,jdbcType=INTEGER} OR 			
+				</if>
+				<if test="createDate != null and createDate != ''">
+					createDate = #{createDate,jdbcType=VARCHAR} OR 			
+				</if>
+				<if test="description != null and description != ''">
+					description = #{description,jdbcType=VARCHAR} OR 			
+				</if>				
+			</trim>
+		</trim>
+	</select>
+	
+	<select id="getAccessCount" resultType="int">
+		SELECT COUNT(c.id) FROM car_info c INNER JOIN manager_sector_info ms ON c.sectorInfo=ms.sectorId
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="managerId != null">
+				ms.managerId = #{managerId,jdbcType=INTEGER} AND
+			</if>
+			<if test="carIds != null">
+				c.id IN 
+				<foreach collection="carIds" item="carId" open="(" close=")" separator=",">
+					#{carId,jdbcType=INTEGER}
+				</foreach>
+			</if>
+		</trim>
+	</select>
+	
+	<select id="getCountWithSector" resultType="java.lang.Integer">
+		SELECT COUNT(id) FROM car_info
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="sectorIds != null">
+				sectorInfo IN 
+				<foreach collection="sectorIds" open="(" close=") AND " item="sectorId" separator=",">
+					#{sectorId,jdbcType=INTEGER}
+				</foreach>	
+			</if>
+			<include refid="entitySelective" />
+		</trim>
+	</select>	
+
+	<select id="getUnboundCount" resultType="java.lang.Integer">
+		SELECT COUNT(id) FROM car_info
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="sectorIds != null">
+				sectorInfo IN 
+				<foreach collection="sectorIds" open="(" close=") AND " item="sectorId" separator=",">
+					#{sectorId,jdbcType=INTEGER}
+				</foreach>	
+			</if>
+			<include refid="unboundSelective" />
+		</trim>
+	</select>
+	
+	<select id="getCrawledCount" resultType="java.lang.Integer">
+		SELECT COUNT(id) FROM car_info c INNER JOIN crawl_car_info cc ON c.id=cc.carId
+		<trim prefix="WHERE" suffixOverrides="AND">
+			cc.crawlId = #{crawlId,jdbcType=INTEGER} AND 
+			<include refid="entitySelective" />
+		</trim>
+	</select>
+	
+	<select id="getList" parameterType="com.jbt.bean.CarInfo" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="Base_Column_List" />
+		FROM car_info
+		<trim prefix="WHERE">
+			<include refid="selective" />
+		</trim>
+	</select>
+	
+	<select id="getListWithCrawl" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="Base_Column_List" />
+		FROM car_info c INNER JOIN crawl_car_info cc ON c.id=cc.carId
+		<trim prefix="WHERE" suffixOverrides="AND">
+			cc.crawlId = #{crawlId,jdbcType=INTEGER} AND 
+			<include refid="entitySelective" />
+		</trim>
+	</select>
+	
+	<select id="getPageListWithSector" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="Base_Column_List" />
+		FROM car_info
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="sectorIds != null">
+				sectorInfo IN 
+				<foreach collection="sectorIds" open="(" close=") AND " item="sectorId" separator=",">
+					#{sectorId,jdbcType=INTEGER}
+				</foreach>	
+			</if>
+			<include refid="entitySelective" />
+		</trim>
+		ORDER BY id DESC
+		LIMIT #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getPageUnboundList" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="Base_Column_List" />
+		FROM car_info
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="sectorIds != null">
+				sectorInfo IN 
+				<foreach collection="sectorIds" open="(" close=") AND " item="sectorId" separator=",">
+					#{sectorId,jdbcType=INTEGER}
+				</foreach>	
+			</if>
+			<include refid="unboundSelective" />
+		</trim>
+		ORDER BY id DESC
+		LIMIT #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getPageCrawledList" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="Base_Column_List" />
+		FROM car_info c INNER JOIN crawl_car_info cc ON c.id=cc.carId
+		<trim prefix="WHERE" suffixOverrides="AND">
+			cc.crawlId = #{crawlId,jdbcType=INTEGER} AND 
+			<include refid="entitySelective" />
+		</trim>
+		ORDER BY id DESC
+		LIMIT #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+	</select>
+	
+	<insert id="insert" parameterType="com.jbt.bean.CarInfo">
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
+		INSERT INTO car_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sn != null">
+				sn,
+			</if>
+			<if test="sectorInfo != null">
+				sectorInfo,
+			</if>
+			<if test="plateNumber != null">
+				plateNumber,
+			</if>
+			<if test="driverType != null">
+				driverType,
+			</if>
+			<if test="totalMileage != null">
+				totalMileage,
+			</if>
+			<if test="driverName != null">
+				driverName,
+			</if>
+			<if test="vin != null">
+				vin,
+			</if>
+			<if test="engineNum != null">
+				engineNum,
+			</if>
+			<if test="purpose != null">
+				purpose,
+			</if>
+			<if test="carModel != null">
+				carModel,
+			</if>
+			<if test="seatNum != null">
+				seatNum,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="managerId != null">
+				managerId,
+			</if>
+			<if test="createDate != null">
+				createDate,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sn != null">
+				#{sn,jdbcType=VARCHAR},
+			</if>
+			<if test="sectorInfo != null">
+				#{sectorInfo,jdbcType=INTEGER},
+			</if>
+			<if test="plateNumber != null">
+				#{plateNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="driverType != null">
+				#{driverType,jdbcType=VARCHAR},
+			</if>
+			<if test="totalMileage != null">
+				#{totalMileage,jdbcType=REAL},
+			</if>
+			<if test="driverName != null">
+				#{driverName,jdbcType=VARCHAR},
+			</if>
+			<if test="vin != null">
+				#{vin,jdbcType=VARCHAR},
+			</if>
+			<if test="engineNum != null">
+				#{engineNum,jdbcType=VARCHAR},
+			</if>
+			<if test="purpose != null">
+				#{purpose,jdbcType=VARCHAR},
+			</if>
+			<if test="carModel != null">
+				#{carModel,jdbcType=VARCHAR},
+			</if>
+			<if test="seatNum != null">
+				#{seatNum,jdbcType=INTEGER},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=INTEGER},
+			</if>
+			<if test="managerId != null">
+				#{managerId,jdbcType=INTEGER},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+		
+	<update id="update" parameterType="com.jbt.bean.CarInfo">
+		UPDATE car_info
+		<set>
+			<if test="sn != null">
+				sn = #{sn,jdbcType=VARCHAR},
+			</if>
+			<if test="sectorInfo != null">
+				sectorInfo = #{sectorInfo,jdbcType=INTEGER},
+			</if>
+			<if test="plateNumber != null">
+				plateNumber = #{plateNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="driverType != null">
+				driverType = #{driverType,jdbcType=VARCHAR},
+			</if>
+			<if test="totalMileage != null">
+				totalMileage = #{totalMileage,jdbcType=REAL},
+			</if>
+			<if test="driverName != null">
+				driverName = #{driverName,jdbcType=VARCHAR},
+			</if>
+			<if test="vin != null">
+				vin = #{vin,jdbcType=VARCHAR},
+			</if>
+			<if test="engineNum != null">
+				engineNum = #{engineNum,jdbcType=VARCHAR},
+			</if>
+			<if test="purpose != null">
+				purpose = #{purpose,jdbcType=VARCHAR},
+			</if>
+			<if test="carModel != null">
+				carModel = #{carModel,jdbcType=VARCHAR},
+			</if>
+			<if test="seatNum != null">
+				seatNum = #{seatNum,jdbcType=INTEGER},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=INTEGER},
+			</if>
+			<if test="managerId != null">
+				managerId = #{managerId,jdbcType=INTEGER},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="setSntoNull">
+		UPDATE car_info SET sn = NULL WHERE id = #{carId,jdbcType=INTEGER}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from car_info
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from car_info
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<update id="updateByPrimaryKey" parameterType="com.jbt.bean.CarInfo">
+		update car_info
+		set sn = #{sn,jdbcType=VARCHAR},
+		fleetInfo = #{fleetinfo,jdbcType=INTEGER},
+		sectorInfo = #{sectorInfo.id,jdbcType=INTEGER},
+		plateNumber = #{plateNumber,jdbcType=VARCHAR},
+		driverType = #{driverType,jdbcType=VARCHAR},
+		totalMileage = #{totalMileage,jdbcType=REAL},
+		driverName = #{driverName,jdbcType=VARCHAR},
+		vin = #{vin,jdbcType=VARCHAR},
+		engineNum = #{engineNum,jdbcType=VARCHAR},
+		purpose = #{purpose,jdbcType=VARCHAR},
+		carModel = #{carModel,jdbcType=VARCHAR},
+		seatNum = #{seatNum,jdbcType=INTEGER},
+		state = #{state,jdbcType=INTEGER},
+		managerName = #{managerName,jdbcType=VARCHAR},
+		createDate = #{createDate,jdbcType=VARCHAR},
+		description = #{description,jdbcType=VARCHAR},
+		monitorTime = #{monitortime,jdbcType=VARCHAR},
+		monitorResult = #{monitorresult,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<!-- 根据条件查询记录 -->
+	<select id="getPageList" resultMap="BaseResultMap">
+		select
+		c.*
+		from car_info c left join sector_info s on c.sectorInfo = s.id
+		where
+		c.sectorInfo in (select id from sector_info where managerInfo = #{managerId})
+		<if
+			test="carInfo.sectorInfo!=null and carInfo.sectorInfo.id!=null and carInfo.sectorInfo.id!=0 ">
+			and s.id = #{carInfo.sectorInfo.id}
+		</if>
+		<if test="carInfo.state!=null and carInfo.state!=-1 ">
+			and c.state LIKE CONCAT(CONCAT('%', #{carInfo.state}),'%')
+		</if>
+		<if test="carInfo.plateNumber!=null and carInfo.plateNumber!='' ">
+			and c.plateNumber = #{carInfo.plateNumber}
+		</if>
+		order by c.createDate desc
+		limit #{start},#{pageSize}
+	</select>
+	<!-- 批量操作 - 删除数据batchDelete batchFinish -->
+	<delete id="batchDelete">
+		delete from car_info
+		where id in
+		<foreach collection="array" item="checkId" index="index" open="("
+			close=")" separator=",">
+			#{checkId}
+		</foreach>
+	</delete>
+	<!-- 获取 -->
+	<select id="getDataByNum" resultType="java.util.HashMap">
+		select
+		d.innage as currentOil,
+		d.mileage as mileage,
+		(
+		select sum(d.totalOil)
+		from car_info c left join drive_log_info d on c.sn = d.sn
+		where d.departuretime like CONCAT(CONCAT('%', #{time}),'%') and
+		c.plateNumber = #{carNum}
+		) as totalOil,
+		(
+		select sum(d.totalMileage)
+		from car_info c left join drive_log_info d on c.sn = d.sn
+		where d.departuretime like CONCAT(CONCAT('%', #{time}),'%') and
+		c.plateNumber = #{carNum}
+		) as totalMileage
+		from car_info c left join drive_log_info d on c.sn = d.sn
+		where c.plateNumber = #{carNum} order by d.arriveTime desc limit 1
+	</select>
+
+	<select id="searchBySn" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from car_info where sn in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="selectStatistical_carState" resultType="java.util.HashMap">
+		select
+		(
+		<!-- 查询空闲车辆 -->
+		select count(*)
+		from car_info c left join sector_info s on c.sectorInfo = s.id
+		where
+		c.sectorInfo in (select id from sector_info where managerInfo = #{managerId}) and
+		c.state = 0
+		<if test="sectorId!=null and sectorId!=null and sectorId!=0 ">
+			and s.id = #{sectorId}
+		</if>
+		<!-- ) as unused, -->
+		) as '空闲车辆',
+		(
+		<!-- 查询占用车辆 -->
+		select count(*)
+		from car_info c left join sector_info s on c.sectorInfo = s.id
+		where
+		c.sectorInfo in (select id from sector_info where managerInfo = #{managerId}) and
+		c.state = 1
+		<if test="sectorId!=null and sectorId!=null and sectorId!=0 ">
+			and s.id = #{sectorId}
+		</if>
+		<!-- ) as used, -->
+		) as '占用车辆',
+		(
+		<!-- 查询故障车辆 -->
+		select count(distinct(sn))
+		from fault_info
+		where
+		<!-- 查询7天内的故障车辆 -->
+		DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(addTime) and
+		sn in (
+		select
+		c.sn from car_info c left join sector_info s on c.sectorInfo = s.id
+		where
+		c.sectorInfo in (select id from sector_info where managerInfo = #{managerId})
+		<if test="sectorId!=null and sectorId!=null and sectorId!=0 ">
+			and s.id = #{sectorId}
+		</if>
+		)
+		<!-- ) as fault, -->
+		) as '故障车辆',
+		(
+		<!-- 查询报警车辆 -->
+		select count(distinct(sn))
+		from warn_info
+		where
+		<!-- 查询7天内的报警车辆 -->
+		DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(createDate) and
+		sn in (
+		select
+		c.sn from car_info c left join sector_info s on c.sectorInfo = s.id
+		where
+		c.sectorInfo in (select id from sector_info where managerInfo = #{managerId})
+		<if test="sectorId!=null and sectorId!=null and sectorId!=0 ">
+			and s.id = #{sectorId}
+		</if>
+		)
+		<!-- ) as warn, -->
+		) as '报警车辆',
+		<!-- 应急车辆 -->
+		<!-- 0 as contingency, -->
+		<!-- 0 as '应急车辆', -->
+		<!-- 保养到期 -->
+		<!-- 0 as maintainExpire, -->
+		0 as '保养到期',
+		<!-- 保险年检验 -->
+		<!-- 0 as insuranceExpire -->
+		0 as '保险年检'
+	</select>
+</mapper>

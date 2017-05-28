@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jbt.dao.WarnInfoMapper">
+	<resultMap id="BaseResultMap" type="com.jbt.bean.WarnInfo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="sn" property="sn" jdbcType="VARCHAR" />
+		<result column="warn" property="warn" jdbcType="INTEGER" />
+		<result column="devicetime" property="devicetime" jdbcType="BIGINT" />
+		<result column="warntype" property="warntype" jdbcType="INTEGER" />
+		<result column="warnnum" property="warnnum" jdbcType="REAL" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="createdate" property="createdate" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, sn, warn, devicetime, warntype, warnnum, state, createdate
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from warn_info
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from warn_info
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jbt.bean.WarnInfo">
+		insert into warn_info (id, sn, warn,
+		devicetime, warntype, warnnum,
+		state, createdate)
+		values (#{id,jdbcType=INTEGER}, #{sn,jdbcType=VARCHAR},
+		#{warn,jdbcType=INTEGER},
+		#{devicetime,jdbcType=BIGINT}, #{warntype,jdbcType=INTEGER}, #{warnnum,jdbcType=REAL},
+		#{state,jdbcType=INTEGER}, #{createdate,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.jbt.bean.WarnInfo">
+		insert into warn_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="sn != null">
+				sn,
+			</if>
+			<if test="warn != null">
+				warn,
+			</if>
+			<if test="devicetime != null">
+				devicetime,
+			</if>
+			<if test="warntype != null">
+				warntype,
+			</if>
+			<if test="warnnum != null">
+				warnnum,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="createdate != null">
+				createdate,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="sn != null">
+				#{sn,jdbcType=VARCHAR},
+			</if>
+			<if test="warn != null">
+				#{warn,jdbcType=INTEGER},
+			</if>
+			<if test="devicetime != null">
+				#{devicetime,jdbcType=BIGINT},
+			</if>
+			<if test="warntype != null">
+				#{warntype,jdbcType=INTEGER},
+			</if>
+			<if test="warnnum != null">
+				#{warnnum,jdbcType=REAL},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=INTEGER},
+			</if>
+			<if test="createdate != null">
+				#{createdate,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.jbt.bean.WarnInfo">
+		update warn_info
+		<set>
+			<if test="sn != null">
+				sn = #{sn,jdbcType=VARCHAR},
+			</if>
+			<if test="warn != null">
+				warn = #{warn,jdbcType=INTEGER},
+			</if>
+			<if test="devicetime != null">
+				devicetime = #{devicetime,jdbcType=BIGINT},
+			</if>
+			<if test="warntype != null">
+				warntype = #{warntype,jdbcType=INTEGER},
+			</if>
+			<if test="warnnum != null">
+				warnnum = #{warnnum,jdbcType=REAL},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=INTEGER},
+			</if>
+			<if test="createdate != null">
+				createdate = #{createdate,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jbt.bean.WarnInfo">
+		update warn_info
+		set sn = #{sn,jdbcType=VARCHAR},
+		warn = #{warn,jdbcType=INTEGER},
+		devicetime = #{devicetime,jdbcType=BIGINT},
+		warntype = #{warntype,jdbcType=INTEGER},
+		warnnum = #{warnnum,jdbcType=REAL},
+		state = #{state,jdbcType=INTEGER},
+		createdate = #{createdate,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="getPageList" resultType="java.util.HashMap">
+		SELECT a.* from (SELECT w.id,ci.plateNumber,w.warntype,w.createdate FROM crawl_car_info AS c JOIN
+		warn_info AS w ON c.sn=w.sn JOIN car_info AS ci ON c.carId=ci.id JOIN crawl_warn_info AS cw ON c.crawlwarnId=cw.id JOIN crawl_info AS cri ON cw.crawlInfo=cri.id WHERE
+		cri.manager=#{manager} 
+		<if test="crawlInfo.crawlname!=null and crawlInfo.crawlname!=''">
+		AND cri.crawlName like CONCAT(CONCAT('%', #{crawlInfo.crawlname}),'%')
+		</if>
+		AND c.state=0 AND w.warntype BETWEEN 6 AND 10
+		ORDER BY w.createdate DESC) as a
+	</select>
+	<select id="getMaxList" resultType="java.util.HashMap">
+		SELECT a.* from (SELECT w.id,ci.plateNumber,w.warntype,w.createdate FROM crawl_car_info AS c JOIN
+		warn_info AS w ON c.sn=w.sn JOIN car_info AS ci ON c.carId=ci.id JOIN crawl_warn_info AS cw ON c.crawlwarnId=cw.id JOIN crawl_info AS cri ON cw.crawlInfo=cri.id WHERE
+		cri.manager=#{manager} and w.id > #{maxId}
+		<if test="crawlInfo.crawlname!=null and crawlInfo.crawlname!=''">
+		AND cri.crawlName like CONCAT(CONCAT('%', #{crawlInfo.crawlname}),'%')
+		</if>
+		AND c.state=0 AND w.warntype BETWEEN 6 AND 10
+		ORDER BY w.createdate DESC) as a
+	</select>
+	<select id="getMaxId" resultType="java.lang.Integer">
+		SELECT max(w.id) FROM crawl_car_info AS c JOIN
+		warn_info AS w ON c.sn=w.sn JOIN car_info AS ci ON c.carId=ci.id JOIN crawl_warn_info AS cw ON c.crawlwarnId=cw.id JOIN crawl_info AS cri ON cw.crawlInfo=cri.id WHERE
+		cri.manager=#{manager} 
+		<if test="crawlInfo.crawlname!=null and crawlInfo.crawlname!=''">
+		AND cri.crawlName like CONCAT(CONCAT('%', #{crawlInfo.crawlname}),'%')
+		</if>
+		AND c.state=0 AND w.warntype BETWEEN 6 AND 10
+	</select>
+	<!-- <select id="getCount" resultType="java.lang.Integer"
+		parameterType="java.lang.Integer">
+		SELECT count(w.id) FROM crawl_car_info AS c JOIN
+		warn_info AS w ON c.sn=w.sn JOIN car_info AS ci ON c.carId=ci.id JOIN crawl_warn_info AS cw ON c.crawlwarnId=cw.id JOIN crawl_info AS cri ON cw.crawlInfo=cri.id WHERE
+		cri.manager=#{manager} AND c.state=0 AND w.warntype BETWEEN 6 AND 10
+	</select> -->
+</mapper>

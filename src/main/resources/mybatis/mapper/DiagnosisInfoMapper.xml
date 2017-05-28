@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jbt.dao.DiagnosisInfoDao">
+
+	<resultMap id="BaseResultMap" type="com.jbt.bean.DiagnosisInfo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="carId" property="carId" jdbcType="INTEGER" />
+		<result column="serial" property="serial" jdbcType="VARCHAR" />
+		<result column="result" property="result" jdbcType="INTEGER" />
+		<result column="createTime" property="createTime" jdbcType="BIGINT" />
+	</resultMap>
+	
+	<sql id="table_name">
+		diagnosis_info
+	</sql>
+	
+	<sql id="Base_Column_List">
+		id, carId, serial, result, createTime
+	</sql>
+	
+	<sql id="selective">
+		<if test="id != null">
+			id = #{id,jdbcType=INTEGER} AND 
+		</if>
+		<if test="carId != null">
+			carId = #{carId,jdbcType=INTEGER} AND 
+		</if>
+		<if test="serial != null and serial != ''">
+			serial = #{serial,jdbcType=VARCHAR} AND 
+		</if>
+		<if test="result != null">
+			result = #{result,jdbcType=INTEGER} AND 
+		</if>
+		<if test="createTime != null">
+			createTime = #{createTime,jdbcType=BIGINT} AND 
+		</if>
+	</sql>
+	
+	<insert id="insertSelective" parameterType="com.jbt.bean.DiagnosisInfo">
+		<selectKey resultType="int" order="AFTER" keyProperty="id">
+          	SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into 
+		<include refid="table_name" />
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="carId != null">
+				carId,
+			</if>
+			<if test="serial != null and serial != ''">
+				serial,
+			</if>
+			<if test="result != null">
+				result,
+			</if>
+			<if test="createTime != null">
+				createTime,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="carId != null">
+				#{carId,jdbcType=INTEGER},
+			</if>
+			<if test="serial != null and serial != ''">
+				#{serial,jdbcType=VARCHAR},
+			</if>
+			<if test="result != null">
+				#{result,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+	
+</mapper>

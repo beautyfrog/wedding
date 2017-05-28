@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jbt.dao.UseCarInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jbt.bean.UseCarInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="startTime" property="starttime" jdbcType="VARCHAR" />
+    <result column="endTime" property="endtime" jdbcType="VARCHAR" />
+    <result column="managerName" property="managername" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="descprition" property="descprition" jdbcType="VARCHAR" />
+    <association property="driverinfo" column="driverInfo" select="com.jbt.dao.StaffInfoMapper.selectByPrimaryKey"/>
+	<association property="carinfo" column="carInfo" select="com.jbt.dao.CarInfoMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, driverInfo, carInfo, startTime, endTime, managerName, state, descprition
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from use_car_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from use_car_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jbt.bean.UseCarInfo" >
+    insert into use_car_info (id, driverInfo, carInfo, 
+      startTime, endTime, managerName, 
+      state, descprition)
+    values (#{id,jdbcType=INTEGER}, #{driverinfo.id,jdbcType=INTEGER}, #{carinfo.id,jdbcType=INTEGER}, 
+      #{starttime,jdbcType=VARCHAR}, #{endtime,jdbcType=VARCHAR}, #{managername,jdbcType=VARCHAR}, 
+      #{state,jdbcType=INTEGER}, #{descprition,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jbt.bean.UseCarInfo" >
+    insert into use_car_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="driverinfo != null" >
+        driverInfo,
+      </if>
+      <if test="carinfo != null" >
+        carInfo,
+      </if>
+      <if test="starttime != null" >
+        startTime,
+      </if>
+      <if test="endtime != null" >
+        endTime,
+      </if>
+      <if test="managername != null" >
+        managerName,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="descprition != null" >
+        descprition,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="driverinfo != null" >
+        #{driverinfo.id,jdbcType=INTEGER},
+      </if>
+      <if test="carinfo != null" >
+        #{carinfo.id,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="managername != null" >
+        #{managername,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="descprition != null" >
+        #{descprition,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jbt.bean.UseCarInfo" >
+    update use_car_info
+    <set >
+      <if test="driverinfo != null" >
+        driverInfo = #{driverinfo.id,jdbcType=INTEGER},
+      </if>
+      <if test="carinfo != null" >
+        carInfo = #{carinfo.id,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null" >
+        startTime = #{starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        endTime = #{endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="managername != null" >
+        managerName = #{managername,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="descprition != null" >
+        descprition = #{descprition,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jbt.bean.UseCarInfo" >
+    update use_car_info
+    set driverInfo = #{driverinfo.id,jdbcType=INTEGER},
+      carInfo = #{carinfo.id,jdbcType=INTEGER},
+      startTime = #{starttime,jdbcType=VARCHAR},
+      endTime = #{endtime,jdbcType=VARCHAR},
+      managerName = #{managername,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      descprition = #{descprition,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+   <!-- 根据条件查询用车记录 -->
+  <select id="getPageList"  resultMap="BaseResultMap">
+  	select
+  		use_car.*
+    from use_car_info use_car 
+    left join staff_info staff on use_car.driverInfo = staff.id
+    left join sector_info sector on staff.sectorInfo = sector.id
+    where  
+    	staff.sectorInfo in (select id from sector_info where managerInfo = #{managerId})
+  	  <if test="useCarInfo.driverinfo!=null and useCarInfo.driverinfo.staffname!=null and useCarInfo.driverinfo.staffname!='' ">  
+           and staff.staffname LIKE CONCAT(CONCAT('%', #{useCarInfo.driverinfo.staffname}),'%')   
+      </if>
+      <if test="useCarInfo.driverinfo!=null and useCarInfo.driverinfo.tel!=null and useCarInfo.driverinfo.tel!='' ">  
+           and staff.tel LIKE CONCAT(CONCAT('%', #{useCarInfo.driverinfo.tel}),'%')   
+      </if>
+      <if test="useCarInfo.driverinfo!=null and useCarInfo.driverinfo.sectorinfo!=null and useCarInfo.driverinfo.sectorinfo.id!=null and useCarInfo.driverinfo.sectorinfo.id!=0 ">  
+           and sector.id = #{useCarInfo.driverinfo.sectorinfo.id} 
+      </if>
+	  order by startTime desc 
+	  limit #{start},#{pageSize} 
+  </select>
+  <!-- 根据条件查询记录条数-->
+  <select id="getCount" parameterType="com.jbt.bean.UseCarInfo"  resultType="java.lang.Integer">
+  	select
+  		count(*)
+    from use_car_info use_car 
+    left join staff_info staff on use_car.driverInfo = staff.id
+    left join sector_info sector on staff.sectorInfo = sector.id
+    where  
+    	staff.sectorInfo in (select id from sector_info where managerInfo = #{managerId})
+  	  <if test="useCarInfo.driverinfo!=null and useCarInfo.driverinfo.staffname!=null and useCarInfo.driverinfo.staffname!='' ">  
+           and staff.staffname LIKE CONCAT(CONCAT('%', #{useCarInfo.driverinfo.staffname}),'%')   
+      </if>
+      <if test="useCarInfo.driverinfo!=null and useCarInfo.driverinfo.tel!=null and useCarInfo.driverinfo.tel!='' ">  
+           and staff.tel LIKE CONCAT(CONCAT('%', #{useCarInfo.driverinfo.tel}),'%')   
+      </if>
+      <if test="useCarInfo.driverinfo!=null and useCarInfo.driverinfo.sectorinfo!=null and useCarInfo.driverinfo.sectorinfo.id!=null and useCarInfo.driverinfo.sectorinfo.id!=0 ">  
+           and sector.id = #{useCarInfo.driverinfo.sectorinfo.id} 
+      </if>
+  </select>
+  <!-- 批量操作 -  删除数据batchDelete  batchFinish -->
+   <delete id="batchDelete">
+         delete from use_car_info
+    	where id in
+        <foreach collection="array" item="checkId" index="index"
+            open="(" close=")" separator=",">
+            #{checkId}
+        </foreach>
+    </delete>
+    
+    <update id="batchFinish" >
+         update use_car_info
+    		set state = 1,endTime = #{endTime}
+    	 where state = 0 and id in
+        <foreach collection="checkId" item="checkId" index="index"
+            open="(" close=")" separator=",">
+            #{checkId}
+        </foreach>
+    </update>
+    <update id="releaseCar" >
+    <!-- 结束行程的同时，将车辆释放为空闲状态 -->
+       update car_info set state = 0 where id in
+       (
+       	select distinct carInfo from use_car_info
+       	 where state = 0 and id in
+       <foreach collection="array" item="checkId" index="index"
+            open="(" close=")" separator=",">
+            #{checkId}
+        </foreach>
+       )
+     </update>
+</mapper>

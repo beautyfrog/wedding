@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jbt.dao.CarMsgSyncInfoDao">
+
+	<resultMap id="BaseResultMap" type="com.jbt.bean.CarMsgSyncInfo">
+		<id column="Id" property="id" jdbcType="INTEGER" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="detail" property="detail" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="BIGINT" />
+	</resultMap>
+	
+	<sql id="selective">
+		<if test="sync != null">
+			<if test="sync.id != null">
+				id = #{sync.id,jdbcType=INTEGER} AND 
+			</if>
+			<if test="sync.state != null">
+				state = #{sync.state,jdbcType=INTEGER} AND 
+			</if>
+			<if test="sync.detail != null and sync.detail != ''">
+				detail = #{sync.detail,jdbcType=VARCHAR} AND 
+			</if>
+			<if test="sync.createTime != null">
+				createTime = #{sync.createTime,jdbcType=BIGINT} AND 
+			</if>
+		</if>
+	</sql>
+	
+	<select id="getCountState" resultType="int">
+		SELECT COUNT(id) FROM #{table,jdbcType=VARCHAR} WHERE state=#{state,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getList" resultMap="BaseResultMap">
+		SELECT * FROM #{table,jdbcType=VARCHAR}
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<include refid="selective" />
+			<!--  
+			<if test="id != null">
+				id = #{id,jdbcType=INTEGER} AND 
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=INTEGER} AND 
+			</if>
+			<if test="detail != null and detail != ''">
+				detail = #{detail,jdbcType=VARCHAR} AND 
+			</if>
+			<if test="createTime != null">
+				createTime = #{createTime,jdbcType=BIGINT} AND 
+			</if>
+			-->
+		</trim>
+	</select>
+	
+	<select id="getPage" resultMap="BaseResultMap">
+		SELECT * FROM #{table,jdbcType=VARCHAR}
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<include refid="selective" />
+			<!--  
+			<if test="sync.id != null">
+				id = #{sync.id,jdbcType=INTEGER} AND 
+			</if>
+			<if test="sync.state != null">
+				state = #{sync.state,jdbcType=INTEGER} AND 
+			</if>
+			<if test="sync.detail != null and sync.detail != ''">
+				detail = #{sync.detail,jdbcType=VARCHAR} AND 
+			</if>
+			<if test="sync.createTime != null">
+				createTime = #{sync.createTime,jdbcType=BIGINT} AND 
+			</if>
+			-->
+		</trim>
+		LIMIT #{start,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+	</select>
+	
+	<update id="updateSelective">
+		UPDATE #{table,jdbcType=VARCHAR}
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="sync.state != null">
+				state = #{sync.state,jdbcType=INTEGER},
+			</if>
+			<if test="sync.detail != null and sync.detail != ''">
+				detail = #{sync.detail,jdbcType=VARCHAR},
+			</if>
+			<if test="sync.createTime != null">
+				createTime = #{sync.createTime,jdbcType=BIGINT},
+			</if>			
+		</trim>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+</mapper>

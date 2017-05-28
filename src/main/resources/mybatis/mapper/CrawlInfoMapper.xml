@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jbt.dao.CrawlInfoDao">
+
+	<resultMap id="BaseResultMap" type="com.jbt.bean.CrawlInfo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="crawlName" property="crawlName" jdbcType="VARCHAR" />
+		<result column="chartType" property="chartType" jdbcType="INTEGER" />
+		<result column="surveillanceType" property="surveillanceType" jdbcType="INTEGER" />
+		<result column="chart" property="chart" jdbcType="VARCHAR" />
+		<result column="surveillance" property="surveillance" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="managerId" property="managerId" jdbcType="INTEGER" />
+		<result column="createDate" property="createDate" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, crawlName, chartType, surveillanceType, chart, surveillance, state, managerId, createDate
+	</sql>
+	
+	<sql id="selective">
+		<trim suffixOverrides="AND">
+			<if test="id != null">
+				id = #{id, jdbcType=INTEGER} AND 
+			</if>
+			<if test="crawlName != null and crawlName != ''">
+				crawlName = #{crawlName, jdbcType=VARCHAR} AND 
+			</if>
+			<if test="chartType != null">
+				chartType = #{chartType, jdbcType=INTEGER} AND 
+			</if>
+			<if test="surveillanceType != null">
+				surveillanceType = #{surveillanceType, jdbcType=INTEGER} AND 
+			</if>
+			<if test="chart != null and chart != ''">
+				chart = #{chart, jdbcType=VARCHAR} AND 
+			</if>
+			<if test="surveillance != null and surveillance != ''">
+				surveillance = #{surveillance, jdbcType=VARCHAR} AND 
+			</if>
+			<if test="state != null">
+				state = #{state, jdbcType=INTEGER} AND 
+			</if>
+			<if test="managerId != null">
+				managerId = #{managerId, jdbcType=INTEGER} AND 
+			</if>
+			<if test="createDate != null and createDate != ''">
+				createDate = #{createDate, jdbcType=VARCHAR} AND 
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="entitySelective">
+		<trim suffixOverrides="AND">
+			<if test="crawlInfo.id != null">
+				id = #{crawlInfo.id, jdbcType=INTEGER} AND 
+			</if>
+			<if test="crawlInfo.crawlName != null and crawlInfo.crawlName != ''">
+				crawlName = #{crawlInfo.crawlName, jdbcType=VARCHAR} AND 
+			</if>
+			<if test="crawlInfo.chartType != null">
+				chartType = #{crawlInfo.chartType, jdbcType=INTEGER} AND 
+			</if>
+			<if test="crawlInfo.surveillanceType != null">
+				surveillanceType = #{crawlInfo.surveillanceType, jdbcType=INTEGER} AND 
+			</if>
+			<if test="crawlInfo.chart != null and crawlInfo.chart != ''">
+				chart = #{crawlInfo.chart, jdbcType=VARCHAR} AND 
+			</if>
+			<if test="crawlInfo.surveillance != null and crawlInfo.surveillance != ''">
+				surveillance = #{crawlInfo.surveillance, jdbcType=VARCHAR} AND 
+			</if>
+			<if test="crawlInfo.state != null">
+				state = #{crawlInfo.state, jdbcType=INTEGER} AND 
+			</if>
+			<if test="crawlInfo.managerId != null">
+				managerId = #{crawlInfo.managerId, jdbcType=INTEGER} AND 
+			</if>
+			<if test="crawlInfo.createDate != null and crawlInfo.createDate != ''">
+				createDate = #{crawlInfo.createDate, jdbcType=VARCHAR} AND 
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="getCount" resultType="int" parameterType="com.jbt.bean.CrawlInfo">
+		SELECT COUNT(id) FROM crawl_info
+		<trim prefix="WHERE">
+			<include refid="selective" />
+		</trim>
+	</select>
+	
+	<select id="getExistCount" resultType="int" parameterType="com.jbt.bean.CrawlInfo">
+		SELECT COUNT(id) FROM crawl_info
+		<trim prefix="WHERE">
+			<if test="id != null">
+				id != #{id, jdbcType=INTEGER} AND 
+			</if>
+			<trim prefix="(" suffix=")" suffixOverrides="OR">
+				<if test="crawlName != null and crawlName != ''">
+					crawlName = #{crawlName, jdbcType=VARCHAR} OR  
+				</if>
+				<if test="chartType != null">
+					chartType = #{chartType, jdbcType=INTEGER} OR 
+				</if>
+				<if test="surveillanceType != null">
+					surveillanceType = #{surveillanceType, jdbcType=INTEGER} OR 
+				</if>
+				<if test="chart != null and chart != ''">
+					chart = #{chart, jdbcType=VARCHAR} OR  
+				</if>
+				<if test="surveillance != null and surveillance != ''">
+					surveillance = #{surveillance, jdbcType=VARCHAR} OR  
+				</if>
+				<if test="state != null">
+					state = #{state, jdbcType=INTEGER} OR  
+				</if>
+				<if test="managerId != null">
+					managerId = #{managerId, jdbcType=INTEGER} OR  
+				</if>
+				<if test="createDate != null and createDate != ''">
+					createDate = #{createDate, jdbcType=VARCHAR} OR  
+				</if>
+			</trim>
+		</trim>
+	</select>
+	
+	<select id="getList" resultMap="BaseResultMap" parameterType="com.jbt.bean.CrawlInfo">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM crawl_info
+		<trim prefix="WHERE">
+			<include refid="selective" />
+		</trim>
+	</select>
+	
+	<select id="getListByCar" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM crawl_info c INNER JOIN crawl_car_info cc ON c.id=cc.crawlId
+		<trim prefix="WHERE" suffixOverrides="AND">
+			carId = #{carId,jdbcType=INTEGER} AND 
+			<if test="crawlInfo != null">
+				<include refid="entitySelective" />			
+			</if>
+		</trim>
+	</select>
+	
+	<select id="getPageList" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM crawl_info
+		<trim prefix="WHERE">
+			<if test="crawlInfo != null">
+				<include refid="entitySelective" />
+			</if>
+		</trim>
+		ORDER BY id DESC
+		LIMIT #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+	</select>
+	
+	<insert id="insert" parameterType="com.jbt.bean.CrawlInfo">
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+		INSERT INTO crawl_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="crawlName != null and crawlName != ''">
+				crawlName,
+			</if>
+			<if test="chartType != null">
+				chartType,
+			</if>
+			<if test="surveillanceType != null">
+				surveillanceType,
+			</if>
+			<if test="chart != null and chart != ''">
+				chart,
+			</if>
+			<if test="surveillance != null and surveillance != ''">
+				surveillance,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="managerId != null">
+				managerId,
+			</if>
+			<if test="createDate != null and createDate != ''">
+				createDate,
+			</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+			<if test="crawlName != null and crawlName != ''">
+				#{crawlName, jdbcType=VARCHAR},
+			</if>
+			<if test="chartType != null">
+				#{chartType, jdbcType=INTEGER},
+			</if>
+			<if test="surveillanceType != null">
+				#{surveillanceType, jdbcType=INTEGER},
+			</if>
+			<if test="chart != null and chart != ''">
+				#{chart, jdbcType=VARCHAR},
+			</if>
+			<if test="surveillance != null and surveillance != ''">
+				#{surveillance, jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				#{state, jdbcType=INTEGER},
+			</if>
+			<if test="managerId != null">
+				#{managerId, jdbcType=INTEGER},
+			</if>
+			<if test="createDate != null and createDate != ''">
+				#{createDate, jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="com.jbt.bean.CrawlInfo">
+		UPDATE crawl_info
+		<set>
+			<trim suffixOverrides=",">
+				<if test="crawlName != null and crawlName != ''">
+					crawlName = #{crawlName, jdbcType=VARCHAR},
+				</if>
+				<if test="chartType != null">
+					chartType = #{chartType, jdbcType=INTEGER},
+				</if>
+				<if test="surveillanceType != null">
+					surveillanceType = #{surveillanceType, jdbcType=INTEGER},
+				</if>
+				<if test="chart != null and chart != ''">
+					chart = #{chart, jdbcType=VARCHAR},
+				</if>
+				<if test="surveillance != null and surveillance != ''">
+					surveillance = #{surveillance, jdbcType=VARCHAR},
+				</if>
+				<if test="state != null">
+					state = #{state, jdbcType=INTEGER},
+				</if>
+				<if test="managerId != null">
+					managerId = #{managerId, jdbcType=INTEGER},
+				</if>
+				<if test="createDate != null and createDate != ''">
+					createDate = #{createDate, jdbcType=VARCHAR},
+				</if>
+			</trim>
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<insert id="insertCarRelate">
+		INSERT INTO crawl_car_info(crawlId, carId) VALUES(#{crawlId,jdbcType=INTEGER}, #{carId,jdbcType=INTEGER})
+	</insert>
+	
+	<delete id="removeCarRelate">
+		DELETE FROM crawl_car_info WHERE crawlId=#{crawlId,jdbcType=INTEGER}
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from crawl_info
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from crawl_info
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.jbt.bean.CrawlInfo">
+		update crawl_info
+		<set>
+			<if test="crawlname != null">
+				crawlName = #{crawlname,jdbcType=VARCHAR},
+			</if>
+			<if test="manager != null">
+				manager = #{manager.id,jdbcType=INTEGER},
+			</if>
+			<if test="creattime != null">
+				creatTime = #{creattime,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jbt.bean.CrawlInfo">
+		update crawl_info
+		set crawlName = #{crawlname,jdbcType=VARCHAR},
+		manager = #{manager.id,jdbcType=INTEGER},
+		creatTime = #{creattime,jdbcType=VARCHAR},
+		state = #{state,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<!-- 根据条件查询围栏 -->
+	<select id="getCrawlList" resultMap="BaseResultMap">
+		SELECT c.* FROM crawl_info AS c JOIN manager_info AS m ON
+		c.manager=m.id WHERE c.manager= #{managerId}
+		<if test="crawlInfo.crawlname!=null and crawlInfo.crawlname!=''">
+		and	c.crawlName like CONCAT(CONCAT('%', #{crawlInfo.crawlname}),'%')</if>
+	    and c.state=0 order by c.creatTime desc
+		limit #{start},#{pageSize}
+	</select>
+	<!-- 根据条件查询围栏记录条数 -->
+	<select id="getCrawlCount" parameterType="com.jbt.bean.CrawlInfo"
+		resultType="java.lang.Integer">
+		SELECT count(c.id) FROM crawl_info AS c JOIN manager_info AS m ON
+		c.manager=m.id WHERE c.manager= #{managerId}
+		<if test="crawlInfo.crawlname!=null and crawlInfo.crawlname!=''">
+		and	c.crawlName like CONCAT(CONCAT('%', #{crawlInfo.crawlname}),'%')</if>
+	    and c.state=0
+	</select>
+</mapper>

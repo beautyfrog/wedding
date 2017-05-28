@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jbt.dao.RegisterInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jbt.bean.RegisterInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sim" property="sim" jdbcType="VARCHAR" />
+    <result column="serialNumber" property="serialnumber" jdbcType="INTEGER" />
+    <result column="provinceId" property="provinceid" jdbcType="INTEGER" />
+    <result column="cityId" property="cityid" jdbcType="INTEGER" />
+    <result column="facturers" property="facturers" jdbcType="VARCHAR" />
+    <result column="sn" property="sn" jdbcType="VARCHAR" />
+    <result column="deviceId" property="deviceid" jdbcType="VARCHAR" />
+    <result column="plateColor" property="platecolor" jdbcType="INTEGER" />
+    <result column="vin" property="vin" jdbcType="VARCHAR" />
+    <result column="carPlate" property="carplate" jdbcType="VARCHAR" />
+    <result column="addTime" property="addtime" jdbcType="VARCHAR" />
+    <result column="onLine" property="online" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sim, serialNumber, provinceId, cityId, facturers, sn, deviceId, plateColor, vin, 
+    carPlate, addTime, onLine, code
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from register_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from register_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jbt.bean.RegisterInfo" >
+    insert into register_info (id, sim, serialNumber, 
+      provinceId, cityId, facturers, 
+      sn, deviceId, plateColor, 
+      vin, carPlate, addTime, 
+      onLine, code)
+    values (#{id,jdbcType=INTEGER}, #{sim,jdbcType=VARCHAR}, #{serialnumber,jdbcType=INTEGER}, 
+      #{provinceid,jdbcType=INTEGER}, #{cityid,jdbcType=INTEGER}, #{facturers,jdbcType=VARCHAR}, 
+      #{sn,jdbcType=VARCHAR}, #{deviceid,jdbcType=VARCHAR}, #{platecolor,jdbcType=INTEGER}, 
+      #{vin,jdbcType=VARCHAR}, #{carplate,jdbcType=VARCHAR}, #{addtime,jdbcType=VARCHAR}, 
+      #{online,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jbt.bean.RegisterInfo" >
+    insert into register_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sim != null" >
+        sim,
+      </if>
+      <if test="serialnumber != null" >
+        serialNumber,
+      </if>
+      <if test="provinceid != null" >
+        provinceId,
+      </if>
+      <if test="cityid != null" >
+        cityId,
+      </if>
+      <if test="facturers != null" >
+        facturers,
+      </if>
+      <if test="sn != null" >
+        sn,
+      </if>
+      <if test="deviceid != null" >
+        deviceId,
+      </if>
+      <if test="platecolor != null" >
+        plateColor,
+      </if>
+      <if test="vin != null" >
+        vin,
+      </if>
+      <if test="carplate != null" >
+        carPlate,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="online != null" >
+        onLine,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sim != null" >
+        #{sim,jdbcType=VARCHAR},
+      </if>
+      <if test="serialnumber != null" >
+        #{serialnumber,jdbcType=INTEGER},
+      </if>
+      <if test="provinceid != null" >
+        #{provinceid,jdbcType=INTEGER},
+      </if>
+      <if test="cityid != null" >
+        #{cityid,jdbcType=INTEGER},
+      </if>
+      <if test="facturers != null" >
+        #{facturers,jdbcType=VARCHAR},
+      </if>
+      <if test="sn != null" >
+        #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null" >
+        #{deviceid,jdbcType=VARCHAR},
+      </if>
+      <if test="platecolor != null" >
+        #{platecolor,jdbcType=INTEGER},
+      </if>
+      <if test="vin != null" >
+        #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="carplate != null" >
+        #{carplate,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=VARCHAR},
+      </if>
+      <if test="online != null" >
+        #{online,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jbt.bean.RegisterInfo" >
+    update register_info
+    <set >
+      <if test="sim != null" >
+        sim = #{sim,jdbcType=VARCHAR},
+      </if>
+      <if test="serialnumber != null" >
+        serialNumber = #{serialnumber,jdbcType=INTEGER},
+      </if>
+      <if test="provinceid != null" >
+        provinceId = #{provinceid,jdbcType=INTEGER},
+      </if>
+      <if test="cityid != null" >
+        cityId = #{cityid,jdbcType=INTEGER},
+      </if>
+      <if test="facturers != null" >
+        facturers = #{facturers,jdbcType=VARCHAR},
+      </if>
+      <if test="sn != null" >
+        sn = #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null" >
+        deviceId = #{deviceid,jdbcType=VARCHAR},
+      </if>
+      <if test="platecolor != null" >
+        plateColor = #{platecolor,jdbcType=INTEGER},
+      </if>
+      <if test="vin != null" >
+        vin = #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="carplate != null" >
+        carPlate = #{carplate,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=VARCHAR},
+      </if>
+      <if test="online != null" >
+        onLine = #{online,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jbt.bean.RegisterInfo" >
+    update register_info
+    set sim = #{sim,jdbcType=VARCHAR},
+      serialNumber = #{serialnumber,jdbcType=INTEGER},
+      provinceId = #{provinceid,jdbcType=INTEGER},
+      cityId = #{cityid,jdbcType=INTEGER},
+      facturers = #{facturers,jdbcType=VARCHAR},
+      sn = #{sn,jdbcType=VARCHAR},
+      deviceId = #{deviceid,jdbcType=VARCHAR},
+      plateColor = #{platecolor,jdbcType=INTEGER},
+      vin = #{vin,jdbcType=VARCHAR},
+      carPlate = #{carplate,jdbcType=VARCHAR},
+      addTime = #{addtime,jdbcType=VARCHAR},
+      onLine = #{online,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

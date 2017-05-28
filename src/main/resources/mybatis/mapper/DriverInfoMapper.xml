@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jbt.dao.DriverInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jbt.bean.DriverInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="realName" property="realname" jdbcType="VARCHAR" />
+    <result column="cardId" property="cardid" jdbcType="VARCHAR" />
+    <result column="driverType" property="drivertype" jdbcType="VARCHAR" />
+    <result column="drivingEndDate" property="drivingenddate" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="drivingPhoto" property="drivingphoto" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="VARCHAR" />
+    <result column="adder" property="adder" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, realName, cardId, driverType, drivingEndDate, email, address, drivingPhoto, state, 
+    description, createDate, adder
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from driver_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from driver_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jbt.bean.DriverInfo" >
+    insert into driver_info (id, realName, cardId, 
+      driverType, drivingEndDate, email, 
+      address, drivingPhoto, state, 
+      description, createDate, adder
+      )
+    values (#{id,jdbcType=INTEGER}, #{realname,jdbcType=VARCHAR}, #{cardid,jdbcType=VARCHAR}, 
+      #{drivertype,jdbcType=VARCHAR}, #{drivingenddate,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{drivingphoto,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{createdate,jdbcType=VARCHAR}, #{adder,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jbt.bean.DriverInfo" >
+    insert into driver_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="realname != null" >
+        realName,
+      </if>
+      <if test="cardid != null" >
+        cardId,
+      </if>
+      <if test="drivertype != null" >
+        driverType,
+      </if>
+      <if test="drivingenddate != null" >
+        drivingEndDate,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="drivingphoto != null" >
+        drivingPhoto,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="adder != null" >
+        adder,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="cardid != null" >
+        #{cardid,jdbcType=VARCHAR},
+      </if>
+      <if test="drivertype != null" >
+        #{drivertype,jdbcType=VARCHAR},
+      </if>
+      <if test="drivingenddate != null" >
+        #{drivingenddate,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="drivingphoto != null" >
+        #{drivingphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="adder != null" >
+        #{adder,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jbt.bean.DriverInfo" >
+    update driver_info
+    <set >
+      <if test="realname != null" >
+        realName = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="cardid != null" >
+        cardId = #{cardid,jdbcType=VARCHAR},
+      </if>
+      <if test="drivertype != null" >
+        driverType = #{drivertype,jdbcType=VARCHAR},
+      </if>
+      <if test="drivingenddate != null" >
+        drivingEndDate = #{drivingenddate,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="drivingphoto != null" >
+        drivingPhoto = #{drivingphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=VARCHAR},
+      </if>
+      <if test="adder != null" >
+        adder = #{adder,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jbt.bean.DriverInfo" >
+    update driver_info
+    set realName = #{realname,jdbcType=VARCHAR},
+      cardId = #{cardid,jdbcType=VARCHAR},
+      driverType = #{drivertype,jdbcType=VARCHAR},
+      drivingEndDate = #{drivingenddate,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      drivingPhoto = #{drivingphoto,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      createDate = #{createdate,jdbcType=VARCHAR},
+      adder = #{adder,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

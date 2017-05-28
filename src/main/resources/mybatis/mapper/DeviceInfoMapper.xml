@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jbt.dao.DeviceInfoDao">
+
+	<resultMap id="BaseResultMap" type="com.jbt.bean.DeviceInfo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="carId" property="carId" jdbcType="INTEGER" />
+		<result column="sn" property="sn" jdbcType="VARCHAR" />
+		<result column="telNum" property="telNum" jdbcType="VARCHAR" />
+		<result column="telSerialNum" property="telSerialNum" jdbcType="VARCHAR" />
+		<result column="checkCode" property="checkCode" jdbcType="VARCHAR" />
+		<result column="deviceType" property="deviceType" jdbcType="VARCHAR" />
+		<result column="sectorInfo" property="sectorInfo" jdbcType="INTEGER" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="cardState" property="cardState" jdbcType="INTEGER" />
+		<result column="managerId" property="managerId" jdbcType="INTEGER" />
+		<result column="createDate" property="createDate" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, carId, sn, telNum, telSerialNum, checkCode, deviceType, sectorInfo, state,
+		cardState, managerId, createDate
+	</sql>
+	
+	<sql id="selective">
+		<trim suffixOverrides="AND">
+			<if test="id != null">
+				id = #{id,jdbcType=INTEGER} AND 
+			</if>
+			<if test="carId != null">
+				carId = #{carId,jdbcType=INTEGER} AND 
+			</if>
+			<if test="sn != null and sn != ''">
+				sn = #{sn,jdbcType=VARCHAR} AND 
+			</if>
+			<if test="telNum != null and telNum != ''">
+				telNum = #{telNum,jdbcType=VARCHAR} AND 
+			</if>
+			<if test="telSerialNum != null and telSerialNum != ''">
+				telSerialNum = #{telSerialNum,jdbcType=VARCHAR} AND 
+			</if>
+			<if test="checkCode != null and checkCode != ''">
+				checkCode = #{checkCode,jdbcType=VARCHAR} AND 
+			</if>
+			<if test="deviceType != null and deviceType != ''">
+				deviceType = #{deviceType,jdbcType=VARCHAR} AND 
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=INTEGER} AND 
+			</if>
+			<if test="createDate != null and createDate != ''">
+				createDate = #{createDate,jdbcType=VARCHAR} AND 
+			</if>
+			<if test="sectorInfo != null">
+				sectorInfo = #{sectorInfo,jdbcType=INTEGER} AND 
+			</if>
+			<if test="managerId != null">
+				managerId = #{managerId,jdbcType=INTEGER} AND  
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="getCount" resultType="int" 
+		parameterType="com.jbt.bean.DeviceInfo" >
+		SELECT COUNT(id) FROM device_info
+		<trim prefix="WHERE">
+			<include refid="selective" />
+		</trim>
+	</select>
+	
+	<select id="getExistCount" resultType="int" 
+		parameterType="com.jbt.bean.DeviceInfo" >
+		SELECT COUNT(id) FROM device_info
+		<trim prefix="WHERE" suffixOverrides="AND|OR">
+			<if test="id != null">
+				id != #{id,jdbcType=INTEGER} AND 
+			</if>
+			<trim prefix="(" suffix=") AND" suffixOverrides="OR">
+				<if test="carId != null">
+					carId = #{carId,jdbcType=INTEGER} OR 
+				</if>
+				<if test="sn != null and sn != ''">
+					sn = #{sn,jdbcType=VARCHAR} OR
+				</if>
+				<if test="telNum != null and telNum != ''">
+					telNum = #{telNum,jdbcType=VARCHAR} OR 
+				</if>
+				<if test="telSerialNum != null and telSerialNum != ''">
+					telSerialNum = #{telSerialNum,jdbcType=VARCHAR} OR 
+				</if>
+				<if test="checkCode != null and checkCode != ''">
+					checkCode = #{checkCode,jdbcType=VARCHAR} OR 
+				</if>
+				<if test="deviceType != null and deviceType != ''">
+					deviceType = #{deviceType,jdbcType=VARCHAR} OR 
+				</if>
+				<if test="state != null">
+					state = #{state,jdbcType=INTEGER} OR 
+				</if>
+				<if test="createDate != null and createDate != ''">
+					createDate = #{createDate,jdbcType=VARCHAR} OR 
+				</if>
+				<if test="sectorInfo != null">
+					sectorInfo = #{sectorInfo,jdbcType=INTEGER} OR 
+				</if>
+				<if test="managerId != null">
+					managerId = #{managerId,jdbcType=INTEGER} OR  
+				</if>				
+			</trim>
+		</trim>
+	</select>
+
+	<select id="getList" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM device_info
+		<trim prefix="WHERE">
+			<include refid="selective" />
+		</trim>
+	</select>
+	
+	<select id="getPageList" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM device_info
+		<trim prefix="WHERE" suffixOverrides="AND">
+			<if test="deviceInfo != null">
+				<if test="deviceInfo.id != null">
+					id = #{deviceInfo.id,jdbcType=INTEGER} AND 
+				</if>
+				<if test="deviceInfo.carId != null">
+					carId = #{deviceInfo.carId,jdbcType=INTEGER} AND 
+				</if>
+				<if test="deviceInfo.sn != null and deviceInfo.sn != ''">
+					sn = #{deviceInfo.sn,jdbcType=VARCHAR} AND 
+				</if>
+				<if test="deviceInfo.telNum != null and deviceInfo.telNum != ''">
+					telNum = #{deviceInfo.telNum,jdbcType=VARCHAR} AND 
+				</if>
+				<if test="deviceInfo.telSerialNum != null and deviceInfo.telSerialNum != ''">
+					telSerialNum = #{deviceInfo.telSerialNum,jdbcType=VARCHAR} AND 
+				</if>
+				<if test="deviceInfo.checkCode != null and deviceInfo.checkCode != ''">
+					checkCode = #{deviceInfo.checkCode,jdbcType=VARCHAR} AND 
+				</if>
+				<if test="deviceInfo.deviceType != null and deviceInfo.deviceType != ''">
+					deviceType = #{deviceInfo.deviceType,jdbcType=VARCHAR} AND 
+				</if>
+				<if test="deviceInfo.state != null">
+					state = #{deviceInfo.state,jdbcType=INTEGER} AND 
+				</if>
+				<if test="deviceInfo.createDate != null and deviceInfo.createDate != ''">
+					createDate = #{deviceInfo.createDate,jdbcType=VARCHAR} AND 
+				</if>
+				<if test="deviceInfo.sectorInfo != null">
+					sectorInfo = #{deviceInfo.sectorInfo,jdbcType=INTEGER} AND 
+				</if>
+				<if test="deviceInfo.managerId != null">
+					managerId = #{deviceInfo.managerId,jdbcType=INTEGER} AND  
+				</if>		
+			</if>
+		</trim>
+		ORDER BY id DESC
+		LIMIT #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+	</select>
+	
+	<insert id="insert" parameterType="com.jbt.bean.DeviceInfo">
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
+		INSERT INTO device_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="carId != null">
+				carId,
+			</if>
+			<if test="sn != null">
+				sn,
+			</if>
+			<if test="telNum != null">
+				telNum,
+			</if>
+			<if test="telSerialNum != null">
+				telSerialNum,
+			</if>
+			<if test="checkCode != null">
+				checkCode,
+			</if>
+			<if test="deviceType != null">
+				deviceType,
+			</if>
+			<if test="sectorInfo != null">
+				sectorInfo,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="cardState != null">
+				cardState,
+			</if>
+			<if test="managerId != null">
+				managerId,
+			</if>			
+			<if test="createDate != null">
+				createDate,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="carId != null">
+				#{carId,jdbcType=INTEGER},
+			</if>
+			<if test="sn != null">
+				#{sn,jdbcType=VARCHAR},
+			</if>
+			<if test="telNum != null">
+				#{telNum,jdbcType=VARCHAR},
+			</if>
+			<if test="telSerialNum != null">
+				#{telSerialNum,jdbcType=VARCHAR},
+			</if>
+			<if test="checkCode != null">
+				#{checkCode,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceType != null">
+				#{deviceType,jdbcType=VARCHAR},
+			</if>
+			<if test="sectorInfo != null">
+				#{sectorInfo,jdbcType=INTEGER},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=INTEGER},
+			</if>
+			<if test="cardState != null">
+				#{cardState,jdbcType=INTEGER},
+			</if>
+			<if test="managerId != null">
+				#{managerId,jdbcType=INTEGER},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="com.jbt.bean.DeviceInfo">
+		UPDATE device_info
+		<set>
+			<if test="carId != null">
+				carId = #{carId,jdbcType=INTEGER},
+			</if>
+			<if test="sn != null">
+				sn = #{sn,jdbcType=VARCHAR},
+			</if>
+			<if test="telNum != null">
+				telNum = #{telNum,jdbcType=VARCHAR},
+			</if>
+			<if test="telSerialNum != null">
+				telSerialNum = #{telSerialNum,jdbcType=VARCHAR},
+			</if>
+			<if test="checkCode != null">
+				checkCode = #{checkCode,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceType != null">
+				deviceType = #{deviceType,jdbcType=VARCHAR},
+			</if>
+			<if test="sectorInfo != null">
+				sectorInfo = #{sectorInfo,jdbcType=INTEGER},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=INTEGER},
+			</if>
+			<if test="cardState != null">
+				cardState = #{cardState,jdbcType=INTEGER},
+			</if>
+			<if test="managerId != null">
+				managerId = #{managerId,jdbcType=INTEGER},
+			</if>			
+			<if test="createDate != null">
+				createDate = #{createDate,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from device_info
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from device_info
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<update id="updateByPrimaryKey" parameterType="com.jbt.bean.DeviceInfo">
+		update device_info
+		set sn = #{sn,jdbcType=VARCHAR},
+		telNum = #{telNum,jdbcType=VARCHAR},
+		telSerialNum = #{telSerialNum,jdbcType=VARCHAR},
+		checkCode = #{checkCode,jdbcType=VARCHAR},
+		deviceType = #{deviceType,jdbcType=VARCHAR},
+		sectorInfo = #{sectorInfo,jdbcType=INTEGER},
+		state = #{state,jdbcType=INTEGER},
+		cardState = #{cardState,jdbcType=INTEGER},
+		adder = #{adder,jdbcType=VARCHAR},
+		createDate = #{createDate,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>
