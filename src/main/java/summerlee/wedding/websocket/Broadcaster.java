@@ -1,12 +1,9 @@
 package summerlee.wedding.websocket;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PreDestroy;
 
@@ -33,11 +30,10 @@ public class Broadcaster implements Runnable {
 	public void run() {
 		while (isRun) {
 			String danmu = danmuQueue.poll();
-			System.out.println("提取到的弹幕：" + danmu);
 			if(StringUtils.isNotBlank(danmu)){
 				// 依次发送
 				for(WeddingSocket socket : sockets.values()){
-					socket.send("提取到的弹幕：" + danmu);
+					socket.send(danmu);
 				}
 			}
 		}

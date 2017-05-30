@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="5">
 
-	<contextName>wedding</contextName>
+	<contextName>wedding-show</contextName>
 	<property name="pattern" value="%d{yyyy-MM-dd  HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n" />
 	
 	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
@@ -9,9 +9,49 @@
 			<pattern>${pattern}</pattern>
 		</encoder>
 	</appender>
+	<appender name="all" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>../logs/all.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${pattern}</pattern>
+		</encoder>
+	</appender>
+	<appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>../logs/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${pattern}</pattern>
+		</encoder>
+	</appender>
 
-	<root level="debug">
+	
+	<logger name="summerlee.wedding" level="debug" addtivity="false">
 		<appender-ref ref="stdout" />
+		<appender-ref ref="all" />
+		<appender-ref ref="error" />
+	</logger>
+	<logger name="org.springframework" level="info">
+		<appender-ref ref="stdout" />
+	</logger>
+	<logger name="org.mybatis" level="info">
+		<appender-ref ref="stdout" />
+	</logger>
+	
+	<!--
+	<root level="info">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="all" />
+		<appender-ref ref="error" />
 	</root>
+	-->
 	
 </configuration>
