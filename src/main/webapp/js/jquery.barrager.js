@@ -1,21 +1,16 @@
-/*!
- *@作者：  赵玉
- *@邮箱：  sailiy@126.com
- *@公司：  彩虹世纪文化传媒有限公司
- *@项目：  jquery.barrager.js
- */
 (function ($) {
     function Barrager(dom) {
         this.canvas = dom.get(0);
         this.ctx = this.canvas.getContext("2d");
         this.msgs = new Array(300);
-        this.width = 1280;
-        this.height = 720;
+        this.width = $(window).width();//1280;
+        this.height = $(window).height()//720;
         this.canvas.width=this.width;
         this.canvas.height=this.height;
-        this.font = "100px 黑体";
+        this.font = "35px fangzheng";
         this.ctx.font=this.font;
-        this.colorArr=["Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue"];
+        //this.colorArr=["Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue"];
+        this.colorArr=["#F0F0F0", "#0B6E48", "#7C8489", "#4FB3A4", "#FF7073", "#F5B977"]
         this.interval = "";
         this.draw = function () {
             if (this.interval != "")return;
@@ -42,7 +37,7 @@
                         }
                     }
                 }
-            }, 20);
+            }, 50);
         };
         this.putMsg = function (datas) {
             for (var j = 0; j < datas.length; j++) {

@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	metadata-complete="true" version="3.0">
 	
-	<!-- -->
+	<!-- 
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>securedapp</web-resource-name>
@@ -14,7 +14,7 @@
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
-	
+	-->
 
 	<!-- BEGIN RESOURCES MAPPING CONFIG -->
 	<servlet-mapping>
