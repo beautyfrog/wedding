@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-import summerlee.wedding.Tool;
-
 /**
  * WX小程序接入
  * 
@@ -49,9 +47,7 @@ public class WeixinController {
 	}
 
 	private String handleValidation(HttpServletRequest request) {
-		String echostr = request.getParameter("echostr");
-		Tool.log("wixin echostr : " + echostr);
-		return echostr;
+		return request.getParameter("echostr");
 	}
 	
 	private String handleMessage(HttpServletRequest request) {

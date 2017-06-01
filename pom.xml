@@ -9,22 +9,29 @@
 	<packaging>war</packaging>
 
 	<properties>
+		<version.slf4j>1.7.21</version.slf4j>
+		<version.logback>1.1.7</version.logback>
 		<version.spring>4.3.4.RELEASE</version.spring>
 	</properties>
 
-	<profiles>
-		<profile>
-			<id>dev</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<runtime.env>dev</runtime.env>
-			</properties>
-		</profile>
-	</profiles>
-
 	<dependencies>
+		<!-- slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${version.slf4j}</version>
+		</dependency>
+		<!-- logback -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${version.logback}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${version.logback}</version>
+		</dependency>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -190,21 +197,5 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<!-- 资源根目录排除各环境的配置，使用单独的资源目录来指定 -->
-				<excludes>
-					<exclude>dev/*</exclude>
-					<exclude>gxtp/*</exclude>
-				</excludes>
-			</resource>
-			<resource>
-				<directory>src/main/resources/${runtime.env}</directory>
-			</resource>
-		</resources>
-	</build>
 
 </project>

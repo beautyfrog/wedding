@@ -7,7 +7,7 @@
         this.height = $(window).height()//720;
         this.canvas.width=this.width;
         this.canvas.height=this.height;
-        this.font = "35px fangzheng";
+        this.font = "45px fangzheng";
         this.ctx.font=this.font;
         //this.colorArr=["Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue"];
         this.colorArr=["#F0F0F0", "#0B6E48", "#7C8489", "#4FB3A4", "#FF7073", "#F5B977"]

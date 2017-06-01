@@ -83,10 +83,15 @@
 <script type="text/javascript">
 	$(function() {
 		var websocket = new WebSocket("wss://${host}/danmusocket");
-		websocket.onmessage = function(evt) {
+		websocket.onmessage = function(evt){
 			$("#canvas").barrager([{
 				"msg" : evt.data
 			}]);
+		}
+		websocket.onopen = function() {
+			setInterval(() => {
+				websocket.send("");
+			}, 10000);
 		}
 	});
 </script>

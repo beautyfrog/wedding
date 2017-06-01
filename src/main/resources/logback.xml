@@ -33,7 +33,7 @@
 		</encoder>
 	</appender>
 
-	
+	<!-- 	
 	<logger name="summerlee.wedding" level="debug" addtivity="false">
 		<appender-ref ref="stdout" />
 		<appender-ref ref="all" />
@@ -41,17 +41,18 @@
 	</logger>
 	<logger name="org.springframework" level="info">
 		<appender-ref ref="stdout" />
+		<appender-ref ref="all" />
 	</logger>
 	<logger name="org.mybatis" level="info">
 		<appender-ref ref="stdout" />
+		<appender-ref ref="all" />
 	</logger>
+	-->
 	
-	<!--
-	<root level="info">
+	<root level="debug">
 		<appender-ref ref="stdout" />
 		<appender-ref ref="all" />
 		<appender-ref ref="error" />
 	</root>
-	-->
 	
 </configuration>
