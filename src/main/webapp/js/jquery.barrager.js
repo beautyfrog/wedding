@@ -1,85 +1,99 @@
-(function ($) {
-    function Barrager(dom) {
-        this.canvas = dom.get(0);
-        this.ctx = this.canvas.getContext("2d");
-        this.msgs = new Array(300);
-        this.width = $(window).width();//1280;
-        this.height = $(window).height()//720;
-        this.canvas.width=this.width;
-        this.canvas.height=this.height;
-        this.font = "45px fangzheng";
-        this.ctx.font=this.font;
-        //this.colorArr=["Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue"];
-        this.colorArr=["#F0F0F0", "#0B6E48", "#7C8489", "#4FB3A4", "#FF7073", "#F5B977"]
-        this.interval = "";
-        this.draw = function () {
-            if (this.interval != "")return;
-            var _this=this;
-            this.interval = setInterval(function () {
-                _this.ctx.clearRect(0, 0, _this.width, _this.height);
-                _this.ctx.save();
-                for (var i = 0; i < _this.msgs.length; i++) {
-                    if (!(_this.msgs[i] == null || _this.msgs[i] == "" || typeof(_this.msgs[i]) == "undefined")) {
-                        if(_this.msgs[i].L==null || typeof(_this.msgs[i].L)=="undefined"){
-                            _this.msgs[i].L=_this.width;
-                            _this.msgs[i].T=parseInt(Math.random() * 700);
-                            _this.msgs[i].S=parseInt(Math.random() * (10 - 4) + 4);
-                            _this.msgs[i].C=_this.colorArr[Math.floor(Math.random() * _this.colorArr.length)];
-                        }else{
-                            if(_this.msgs[i].L<-200){
-                                _this.msgs[i]=null;
-                            }else {
-                                _this.msgs[i].L=parseInt(_this.msgs[i].L-_this.msgs[i].S);
-                                _this.ctx.fillStyle =_this.msgs[i].C;
-                                _this.ctx.fillText(_this.msgs[i].msg,_this.msgs[i].L,_this.msgs[i].T);
-                                _this.ctx.restore();
-                            }
-                        }
-                    }
-                }
-            }, 50);
-        };
-        this.putMsg = function (datas) {
-            for (var j = 0; j < datas.length; j++) {
-                for (var i = 0; i < this.msgs.length; i++) {
-                    if (this.msgs[i] == null || this.msgs[i] == "" || typeof(this.msgs[i]) == "undefined") {
-                        this.msgs[i] = datas[j];
-                        break;
-                    }
-                }
-            }
-            this.draw();
-        };
-        this.clear = function () {
-            clearInterval(this.interval);
-            this.interval="";
-            this.ctx.clearRect(0, 0, this.width, this.height);
-            this.ctx.save();
-            for(var i=0;i<this.msgs.length;i++){
-                this.msgs[i]=null;
-            }
-        };
-    }
+/*!
+ *@name     jquery.barrager.js
+ *@author   yaseng@uauc.net
+ *@url      https://github.com/yaseng/jquery.barrager.js
+ */
+(function($) {
 
-    $.fn.barrager = function (para) {
-        if (typeof(para)=="string") {
-            try{
-                var api = $(this).data('barrager_api');
-                api[para].apply(api);
-            }catch (e){}
-        } else if (typeof para == 'object' || !para) {
-            $this = $(this);
-            if ($this.data('barrager_api') != null && $this.data('barrager_api') != ''){
-                var api = $this.data('barrager_api');
-                api.putMsg(para);
-            }else{
-                var api = new Barrager($this);
-                $this.data('barrager_api', api);
-                api.putMsg(para);
-            }
-        } else {
-            $.error('Method ' + method + ' does not exist on jQuery.barrager');
-        }
-        return this;
-    }
+	$.fn.barrager = function(barrage) {
+		barrage = $.extend({
+			close:true,
+			bottom: 0,
+			max: 10,
+			speed: 10,
+			color: '#fff',
+			old_ie_color : '#000000'
+		}, barrage || {});
+
+		var time = new Date().getTime();
+		var barrager_id = 'barrage_' + time;
+		var id = '#' + barrager_id;
+		var div_barrager = $("<div class='barrage' id='" + barrager_id + "'></div>").appendTo($(this));
+		var window_height = $(window).height() - 100;
+		var bottom = (barrage.bottom == 0) ? Math.floor(Math.random() * window_height + 40) : barrage.bottom;
+		div_barrager.css("bottom", bottom + "px");
+		div_barrager_box = $("<div class='barrage_box cl'></div>").appendTo(div_barrager);
+		if(barrage.img){
+
+			div_barrager_box.append("<a class='portrait z' href='javascript:;'></a>");
+			var img = $("<img src='' >").appendTo(id + " .barrage_box .portrait");
+			img.attr('src', barrage.img);
+		}
+		
+		div_barrager_box.append(" <div class='z p'></div>");
+		if(barrage.close){
+
+			div_barrager_box.append(" <div class='close z'></div>");
+
+		}
+		
+		var content = $("<a title='' href='' target='_blank'></a>").appendTo(id + " .barrage_box .p");
+		content.attr({
+			'href': barrage.href,
+			'id': barrage.id
+		}).empty().append(barrage.info);
+		if(navigator.userAgent.indexOf("MSIE 6.0")>0  ||  navigator.userAgent.indexOf("MSIE 7.0")>0 ||  navigator.userAgent.indexOf("MSIE 8.0")>0  ){
+
+			content.css('color', barrage.old_ie_color);
+
+		}else{
+
+			//content.css('color', barrage.color);
+			content.css({'color' : barrage.color, 'font-family' : "fangzheng", "font-size" : "25px"});
+
+		}
+		
+		var i = 0;
+		div_barrager.css('margin-right', i);
+		var looper = setInterval(barrager, barrage.speed);
+
+		function barrager() {
+
+
+			var window_width = $(window).width() + 1024;
+			if (i < window_width) {
+				i += 1;
+
+				$(id).css('margin-right', i);
+			} else {
+
+				$(id).remove();
+ 				return false;
+			}
+
+		}
+
+
+		div_barrager_box.mouseover(function() {
+			clearInterval(looper);
+		});
+
+		div_barrager_box.mouseout(function() {
+			looper = setInterval(barrager, barrage.speed);
+		});
+
+		$(id+'.barrage .barrage_box .close').click(function(){
+
+			$(id).remove();
+
+		})
+
+	}
+ 
+	$.fn.barrager.removeAll=function(){
+
+		 $('.barrage').remove();
+
+	}
+
 })(jQuery);

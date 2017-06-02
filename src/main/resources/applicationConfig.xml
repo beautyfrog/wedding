@@ -12,7 +12,7 @@
 
 	<context:component-scan base-package="summerlee.wedding" />
 
-	<!-- 引入配置文件 
+	<!-- 引入配置文件 -->
 	<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="fileEncoding" value="utf-8" />
 		<property name="locations">
@@ -22,10 +22,9 @@
 			</list>
 		</property>
 	</bean>
-	<bean id="propertyConfigurer" class="com.jbt.util.PropertyPlaceholderConfigurer">
+	<bean id="propertyConfigurer" class="summerlee.wedding.PropertyPlaceholderConfigurer">
 		<property name="properties" ref="configProperties" />
 	</bean>
-	-->
 
 	<import resource="spring-mvc.xml" />
 	<!--  
