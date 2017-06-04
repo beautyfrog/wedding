@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.annotation.PreDestroy;
 
@@ -31,13 +30,14 @@ public class Broadcaster implements Runnable {
 	public void run() {
 		String danmu;
 		while (isRun) {
-			while(!danmuQueue.isEmpty()){
-				danmu = danmuQueue.poll();
-				if(StringUtils.isNotBlank(danmu)){
-					// 依次发送
-					for(WeddingSocket socket : sockets.values()){
-						socket.send(danmu);
-					}
+			if(danmuQueue.isEmpty()){
+				continue;
+			}
+			danmu = danmuQueue.poll();
+			if(StringUtils.isNotBlank(danmu)){
+				// 依次发送
+				for(WeddingSocket socket : sockets.values()){
+					socket.send(danmu);
 				}
 			}
 		}

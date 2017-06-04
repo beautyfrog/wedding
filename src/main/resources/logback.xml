@@ -11,21 +11,7 @@
 	</appender>
 	<appender name="all" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>../logs/all.%d{yyyy-MM-dd}.log</fileNamePattern>
-			<maxHistory>30</maxHistory>
-		</rollingPolicy>
-		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<pattern>${pattern}</pattern>
-		</encoder>
-	</appender>
-	<appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<filter class="ch.qos.logback.classic.filter.LevelFilter">
-			<level>ERROR</level>
-			<onMatch>ACCEPT</onMatch>
-			<onMismatch>DENY</onMismatch>
-		</filter>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>../logs/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>/home/logs/all.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -33,11 +19,9 @@
 		</encoder>
 	</appender>
 
-	<!-- 	
 	<logger name="summerlee.wedding" level="debug" addtivity="false">
 		<appender-ref ref="stdout" />
 		<appender-ref ref="all" />
-		<appender-ref ref="error" />
 	</logger>
 	<logger name="org.springframework" level="info">
 		<appender-ref ref="stdout" />
@@ -47,12 +31,6 @@
 		<appender-ref ref="stdout" />
 		<appender-ref ref="all" />
 	</logger>
-	-->
-	
-	<root level="debug">
-		<appender-ref ref="stdout" />
-		<appender-ref ref="all" />
-		<appender-ref ref="error" />
-	</root>
+	 
 	
 </configuration>

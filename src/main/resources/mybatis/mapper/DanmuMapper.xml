@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="summerlee.wedding.service.dao.DanmuDao">
+
+	<resultMap id="BaseResultMap" type="summerlee.wedding.service.bean.Danmu">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="firend" property="firend" jdbcType="VARCHAR" />
+		<result column="avatar" property="avatar" jdbcType="VARCHAR" />
+		<result column="msg" property="msg" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="DECIMAL" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, firend, avatar, msg, create_time
+	</sql>
+	
+	<sql id="selective">
+		<trim suffixOverrides="AND">
+			<if test="id != null">
+				id = #{id,jdbcType=INTEGER} AND 			
+			</if>
+			<if test="firend != null and firend != ''">
+				firend LIKE CONCAT('%', #{firend,jdbcType=VARCHAR}, '%') AND
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="entitySelective">
+		<if test="danmu != null">
+			<if test="danmu.id != null">
+				id = #{carInfo.id,jdbcType=INTEGER} AND 			
+			</if>
+			<if test="danmu.firend != null and danmu.firend != ''">
+				firend LIKE CONCAT('%', #{danmu.firend,jdbcType=VARCHAR}, '%') AND 
+			</if>		
+		</if>		
+	</sql>
+	
+	<select id="getCount" parameterType="summerlee.wedding.service.bean.Danmu"
+		resultType="java.lang.Integer">
+		SELECT COUNT(id) FROM wedding_danmu
+		<trim prefix="WHERE">
+			<include refid="selective" />
+		</trim>
+	</select>
+	
+	<select id="getPageList" parameterType="summerlee.wedding.service.bean.Danmu" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="Base_Column_List" />
+		FROM wedding_danmu
+		<trim prefix="WHERE">
+			<include refid="entitySelective" />
+		</trim>
+		ORDER BY id DESC
+		LIMIT #{start,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+	</select>
+	
+	<insert id="insert" parameterType="summerlee.wedding.service.bean.Danmu">
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
+		INSERT INTO wedding_danmu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="firend != null">
+				firend,
+			</if>
+			<if test="avatar != null">
+				avatar,
+			</if>
+			<if test="msg != null">
+				msg,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="firend != null">
+				#{firend,jdbcType=VARCHAR},
+			</if>
+			<if test="avatar != null">
+				#{avatar,jdbcType=VARCHAR},
+			</if>
+			<if test="msg != null">
+				#{msg,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+
+</mapper>

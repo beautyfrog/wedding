@@ -10,6 +10,7 @@
 
 	<properties>
 		<version.slf4j>1.7.21</version.slf4j>
+		<version.slf4j.over>1.7.21</version.slf4j.over>
 		<version.logback>1.1.7</version.logback>
 		<version.spring>4.3.4.RELEASE</version.spring>
 	</properties>
@@ -20,6 +21,16 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${version.slf4j}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${version.slf4j.over}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+			<version>${version.slf4j.over}</version>
 		</dependency>
 		<!-- logback -->
 		<dependency>
