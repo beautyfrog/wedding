@@ -1031,8 +1031,8 @@ small.banner {
 @media (min-width: 769px) {
 	.homepage-info {
 		font-size: .85em;
-		right: 3.5em;
-		bottom: 3em
+		right: 2em;
+		bottom: 1em
 	}
 }
 
@@ -1511,7 +1511,7 @@ body.demo-playing>.vegas-overlay {
 }
 
 .vegas-overlay {
-	opacity: .2 !important
+	opacity: .1 !important
 }
 
 .theme-sea h2 {
